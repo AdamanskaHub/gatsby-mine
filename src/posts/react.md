@@ -1,7 +1,7 @@
 ---
 
-title: "The gatsby"
-date: "Yesterday"
+title: "The react post"
+date: "Someday"
 
 ---
 
