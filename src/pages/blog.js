@@ -8,16 +8,16 @@ const BlogPage = () => {
 
     const data = useStaticQuery(graphql`
     query {
-        allMarkdownRemark {
+        allContentfulBlogPost (
+          sort: {fields:publishedDate, order:DESC,}
+        )
+        
+        {
           edges {
             node {
-                fields {
-                    slug
-                }
-              frontmatter {
-                  title
-                  date
-              }
+              title
+              slug
+              publishedDate(formatString: "YYYY MMMM DD")
             }
           }
         }
@@ -29,11 +29,12 @@ const BlogPage = () => {
             <h1>Blog</h1>
             <ol className={blogStyles.posts}>
                 {
-                    data.allMarkdownRemark.edges.map((edge)=> {
+                    data.allContentfulBlogPost.edges.map((edge)=> {
+                        // I commented all content from contentful src fragment
                         return (
                             <li className={blogStyles.post}>
-                                <h2><Link to={`/blog/${edge.node.fields.slug}`}>{edge.node.frontmatter.title}</Link></h2>
-                                <p>{edge.node.frontmatter.date}</p>
+                                <h2><Link to={`/blog/${edge.node.slug}`}>{edge.node.title}</Link></h2>
+                                <p>{edge.node.publishedDate}</p>
                             </li>
                         )
                     }) 
